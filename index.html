@@ -1,239 +1,326 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Pump AI Bot</title>
-    <!-- Подключаем скрипт Telegram WebApp -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <!-- Шрифт Inter для современного вида -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            /* Цвета, которые будут подстраиваться под тему Telegram, но с нашим акцентом */
-            --tg-theme-bg-color: #1c1c1e;
-            --tg-theme-text-color: #ffffff;
-            --tg-theme-button-color: #d63384; /* Малиновый акцент */
-            --tg-theme-button-text-color: #ffffff;
-            --tg-theme-secondary-bg-color: #2c2c2e;
-            --accent-gradient: linear-gradient(135deg, #d63384 0%, #8e2de2 100%);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resight — ИИ-консультант для малого бизнеса</title>
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #1a1a1f 0%, #121217 100%);
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0c0;
+      --accent: #a8ff66; /* ярко-салатовый */
+      --accent-hover: #94e655;
+      --card-bg: rgba(30, 30, 38, 0.6);
+      --card-border: rgba(80, 80, 100, 0.2);
+      --glow-pink: #ff6ec7;
+      --glow-purple: #a663cc;
+      --glow-green: #a8ff66;
+    }
 
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--tg-theme-bg-color);
-            color: var(--tg-theme-text-color);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
 
-        /* Контейнер */
-        .container {
-            padding: 24px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        /* Логотип / Заголовок */
-        .header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
+    /* Анимированные блики */
+    body::before,
+    body::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      z-index: 0;
+    }
 
-        .logo-icon {
-            font-size: 48px;
-            margin-bottom: 12px;
-            display: inline-block;
-            animation: bounce 2s infinite;
-        }
+    body::before {
+      width: 300px;
+      height: 300px;
+      background: var(--glow-pink);
+      top: 10%;
+      left: 5%;
+      animation: float 18s infinite ease-in-out;
+    }
 
-        h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin: 0;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-        }
+    body::after {
+      width: 250px;
+      height: 250px;
+      background: var(--glow-purple);
+      bottom: 15%;
+      right: 8%;
+      animation: float 22s infinite reverse ease-in-out;
+    }
 
-        p.subtitle {
-            font-size: 16px;
-            color: #9ca3af;
-            margin-top: 8px;
-            line-height: 1.5;
-        }
+    .glow-dot {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.25;
+      z-index: 0;
+    }
 
-        /* Карточки преимуществ */
-        .features {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 16px;
-            margin-bottom: 32px;
-        }
+    .dot-1 {
+      width: 200px;
+      height: 200px;
+      background: var(--glow-green);
+      top: 40%;
+      left: 20%;
+      animation: float 25s infinite ease-in-out;
+    }
 
-        .feature-card {
-            background-color: var(--tg-theme-secondary-bg-color);
-            padding: 16px;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: transform 0.2s;
-        }
+    .dot-2 {
+      width: 180px;
+      height: 180px;
+      background: var(--glow-pink);
+      top: 70%;
+      left: 40%;
+      animation: float 19s infinite reverse ease-in-out;
+    }
 
-        .feature-card:active {
-            transform: scale(0.98);
-        }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      25%  { transform: translate(30px, -40px); }
+      50%  { transform: translate(-20px, 50px); }
+      75%  { transform: translate(40px, 20px); }
+    }
 
-        .feature-icon {
-            font-size: 24px;
-            background: rgba(255, 255, 255, 0.1);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
 
-        .feature-text h3 {
-            margin: 0;
-            font-size: 15px;
-            font-weight: 600;
-        }
+    header {
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        .feature-text p {
-            margin: 4px 0 0;
-            font-size: 13px;
-            color: #9ca3af;
-        }
+    .logo {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
 
-        /* Главная кнопка */
-        .cta-button {
-            background: var(--accent-gradient);
-            color: white;
-            border: none;
-            padding: 18px;
-            border-radius: 14px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
-            transition: opacity 0.2s;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+    .logo span.accent {
+      color: var(--accent);
+    }
 
-        .cta-button:active {
-            opacity: 0.8;
-        }
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.2s;
+    }
 
-        /* Анимация */
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
+    .nav-link:hover {
+      color: var(--accent);
+    }
 
-        /* Футер */
-        .footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 12px;
-            color: #555;
-        }
-    </style>
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto 32px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      padding: 14px 42px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(168, 255, 102, 0.25);
+      letter-spacing: -0.2px;
+    }
+
+    .btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(168, 255, 102, 0.4);
+    }
+
+    .features {
+      padding: 70px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 50px;
+      color: var(--text-primary);
+      font-weight: 800;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+    }
+
+    .card {
+      padding: 28px;
+      border-radius: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      border-color: rgba(168, 255, 102, 0.2);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 14px;
+      color: var(--accent);
+    }
+
+    .card p {
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px 0 20px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      border-top: 1px solid rgba(80, 80, 100, 0.15);
+      margin-top: 40px;
+    }
+
+    /* Мобильные стили */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+      .hero p {
+        font-size: 16px;
+      }
+      .btn {
+        padding: 12px 36px;
+        font-size: 16px;
+      }
+      .section-title {
+        font-size: 28px;
+      }
+      header {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 60px 0 40px;
+      }
+      .hero h1 {
+        font-size: 28px;
+      }
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- Анимированные блики -->
+  <div class="glow-dot dot-1"></div>
+  <div class="glow-dot dot-2"></div>
+
+  <div class="container">
+    <header>
+      <div class="logo"><span class="accent">Resight</span></div>
+      <a href="#about" class="nav-link">О продукте</a>
+    </header>
+
+    <section class="hero">
+      <h1><span class="accent">Resight</span>, ваш ИИ-консультант по бизнесу с учётом российской специфики</h1>
+      <p>Проверяет ваши решения на соответствие НК РФ, 152-ФЗ, правилам маркетплейсов и best practices — и объясняет всё простым языком.</p>
+      <a href="#" class="btn">Попробовать бесплатно</a>
+    </section>
+  </div>
+
+  <section class="features">
     <div class="container">
-        <!-- Шапка -->
-        <div class="header">
-            <div class="logo-icon">🍑</div>
-            <h1>Pump AI Bot</h1>
-            <p class="subtitle">Твой персональный тренер и нутрициолог в кармане. Набор массы без жира.</p>
+      <h2 class="section-title">Почему предприниматели выбирают Resight</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>✅ Проверка по закону</h3>
+          <p>Автоматически сверяет ваш план с НК РФ, 44-ФЗ, требованиями Ozon и Wildberries — и показывает, где вы рискуете штрафами или блокировкой.</p>
         </div>
-
-        <!-- Преимущества -->
-        <div class="features">
-            <div class="feature-card">
-                <div class="feature-icon">🧠</div>
-                <div class="feature-text">
-                    <h3>AI-План тренировок</h3>
-                    <p>Адаптируется под твой прогресс каждую неделю</p>
-                </div>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🍽</div>
-                <div class="feature-text">
-                    <h3>Без строгих диет</h3>
-                    <p>Составление рациона с AI под твои цели и предпочтения</p>
-                </div>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📈</div>
-                <div class="feature-text">
-                    <h3>Только здоровый подход</h3>
-                    <p>Упражнения адаптируются под индивидуальные особенности организма</p>
-                </div>
-            </div>
+        <div class="card">
+          <h3>📊 Юнит-экономика за 1 клик</h3>
+          <p>Рассчитывает рентабельность SKU на маркетплейсах, CAC, LTV и ROI — с учётом всех комиссий, логистики и налогов.</p>
         </div>
-
-        <!-- Кнопка действия -->
-        <button class="cta-button" onclick="startApp()">
-            Создать мой план 🚀
-        </button>
+        <div class="card">
+          <h3>🧠 Объясняет как человек</h3>
+          <p>Два режима: для эксперта — со ссылками на статьи закона, для новичка — простыми словами без жаргона.</p>
+        </div>
+        <div class="card">
+          <h3>🔒 Без персональных данных</h3>
+          <p>Работает с обезличенными данными. Никаких ПДн — полное соответствие 152-ФЗ.</p>
+        </div>
+        <div class="card">
+          <h3>📈 ROI x15 гарантирован</h3>
+          <p>Каждый рубль подписки возвращает ₽15 за счёт снижения издержек, роста удержания и автоматизации рутины.</p>
+        </div>
+        <div class="card">
+          <h3>💼 Единое рабочее пространство</h3>
+          <p>Все расчёты, идеи, чек-листы и рекомендации — в одном месте. Больше не нужно переключаться между Excel, CRM и 1С.</p>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="footer">
-        Pump AI © 2026<br>
-        Made for Glute Gains
+  <div class="container">
+    <div class="hero" style="padding: 50px 0;">
+      <h2>Готовы освободить время от рутины и сосредоточиться на росте?</h2>
+      <a href="#" class="btn">Попробовать бесплатно</a>
     </div>
+  </div>
 
-    <script>
-        // Инициализация Telegram WebApp
-        const tg = window.Telegram.WebApp;
+  <footer class="footer">
+    <div class="container">
+      © 2026 Resight. ИИ-консультант для малого бизнеса в России.
+    </div>
+  </footer>
 
-        // Сообщаем Телеграму, что приложение готово
-        tg.ready();
-        
-        // Разворачиваем на весь экран
-        tg.expand();
-
-        // Настраиваем цвета хедера под приложение
-        tg.setHeaderColor(getComputedStyle(document.documentElement).getPropertyValue('--tg-theme-bg-color'));
-
-        // Функция нажатия на кнопку
-        function startApp() {
-            // Вибрация для тактильного отклика (фишка Telegram)
-            tg.HapticFeedback.impactOccurred('medium');
-
-            // Здесь будет логика перехода к анкете
-            // Для примера просто отправляем данные боту
-            tg.sendData("START_ONBOARDING");
-            
-            // Или можно закрыть окно, если логика в чате
-            // tg.close();
-            
-            alert("Переход к созданию персонального плана...");
-        }
-
-        // Динамическая кнопка внизу (MainButton)
-        /* 
-        tg.MainButton.setText("СОЗДАТЬ ПЛАН");
-        tg.MainButton.show();
-        tg.MainButton.onClick(function() {
-            startApp();
-        });
-        */
-    </script>
 </body>
 </html>
