@@ -1,651 +1,326 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Алина Малышева | Фотограф</title>
-    
-    <!-- Подключение шрифтов Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resight — ИИ-консультант для малого бизнеса</title>
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #1a1a1f 0%, #121217 100%);
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0c0;
+      --accent: #a8ff66; /* ярко-салатовый */
+      --accent-hover: #94e655;
+      --card-bg: rgba(30, 30, 38, 0.6);
+      --card-border: rgba(80, 80, 100, 0.2);
+      --glow-pink: #ff6ec7;
+      --glow-purple: #a663cc;
+      --glow-green: #a8ff66;
+    }
 
-    <style>
-        /* === ПЕРЕМЕННЫЕ ЦВЕТОВ И ШРИФТОВ === */
-        :root {
-            --bg-color: #F9F7F2;       /* Молочный фон */
-            --section-bg: #EFEAE4;     /* Светло-бежевый для секций */
-            --text-main: #4A3B32;      /* Кофейный текст */
-            --text-light: #7D6E63;     /* Светло-коричневый для описаний */
-            --accent: #A67B5B;         /* Терракотовый акцент */
-            --white: #FFFFFF;
-            
-            --font-hand: 'Great Vibes', cursive;
-            --font-body: 'Montserrat', sans-serif;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
 
-        /* === БАЗОВЫЕ СТИЛИ === */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
 
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+    /* Анимированные блики */
+    body::before,
+    body::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.3;
+      z-index: 0;
+    }
 
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
-        ul { list-style: none; }
-        img { max-width: 100%; display: block; object-fit: cover; }
+    body::before {
+      width: 300px;
+      height: 300px;
+      background: var(--glow-pink);
+      top: 10%;
+      left: 5%;
+      animation: float 18s infinite ease-in-out;
+    }
 
-        /* Типографика */
-        h1, h2, h3 {
-            font-family: var(--font-hand);
-            font-weight: 400;
-            color: var(--text-main);
-        }
+    body::after {
+      width: 250px;
+      height: 250px;
+      background: var(--glow-purple);
+      bottom: 15%;
+      right: 8%;
+      animation: float 22s infinite reverse ease-in-out;
+    }
 
-        h2 {
-            font-size: 3.5rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
+    .glow-dot {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.25;
+      z-index: 0;
+    }
 
-        .section-subtitle {
-            text-align: center;
-            font-size: 1.1rem;
-            color: var(--text-light);
-            margin-bottom: 3rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    .dot-1 {
+      width: 200px;
+      height: 200px;
+      background: var(--glow-green);
+      top: 40%;
+      left: 20%;
+      animation: float 25s infinite ease-in-out;
+    }
 
-        /* Кнопки */
-        .btn {
-            display: inline-block;
-            background-color: var(--accent);
-            color: var(--white);
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 500;
-            border: 2px solid var(--accent);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    .dot-2 {
+      width: 180px;
+      height: 180px;
+      background: var(--glow-pink);
+      top: 70%;
+      left: 40%;
+      animation: float 19s infinite reverse ease-in-out;
+    }
 
-        .btn:hover {
-            background-color: transparent;
-            color: var(--accent);
-            transform: translateY(-3px);
-        }
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      25%  { transform: translate(30px, -40px); }
+      50%  { transform: translate(-20px, 50px); }
+      75%  { transform: translate(40px, 20px); }
+    }
 
-        .btn-outline {
-            background-color: transparent;
-            color: var(--text-main);
-            border: 2px solid var(--text-main);
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
 
-        .btn-outline:hover {
-            background-color: var(--text-main);
-            color: var(--white);
-        }
+    header {
+      padding: 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        /* Контейнер */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+    .logo {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
 
-        section {
-            padding: 80px 0;
-        }
+    .logo span.accent {
+      color: var(--accent);
+    }
 
-        /* === НАВИГАЦИЯ === */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(249, 247, 242, 0.95);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(74, 59, 50, 0.05);
-        }
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 16px;
+      transition: color 0.2s;
+    }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .nav-link:hover {
+      color: var(--accent);
+    }
 
-        .logo {
-            font-family: var(--font-hand);
-            font-size: 2rem;
-            color: var(--text-main);
-            font-weight: bold;
-        }
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 30px;
-        }
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
 
-        .nav-links a {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--text-main);
-        }
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto 32px;
+    }
 
-        .nav-links a:hover {
-            color: var(--accent);
-        }
+    .btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #000;
+      padding: 14px 42px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(168, 255, 102, 0.25);
+      letter-spacing: -0.2px;
+    }
 
-        /* Мобильное меню (гамбургер) скрыто на ПК */
-        .burger { display: none; cursor: pointer; }
-        .burger div { width: 25px; height: 3px; background-color: var(--text-main); margin: 5px; transition: 0.3s; }
+    .btn:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(168, 255, 102, 0.4);
+    }
 
-        /* === ГЛАВНЫЙ ЭКРАН (HERO) === */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            /* Замените ссылку ниже на ваше реальное фото */
-            background: linear-gradient(rgba(74, 59, 50, 0.3), rgba(74, 59, 50, 0.3)), url('https://images.unsplash.com/photo-1554048612-387768052bf7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            color: var(--white);
-            padding-top: 60px;
-        }
+    .features {
+      padding: 70px 0;
+    }
 
-        .hero-content h1 {
-            font-size: 5rem;
-            margin-bottom: 20px;
-            color: var(--white);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 50px;
+      color: var(--text-primary);
+      font-weight: 800;
+    }
 
-        .hero-content p {
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-            font-weight: 300;
-        }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+    }
 
-        /* === ОБО МНЕ === */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
+    .card {
+      padding: 28px;
+      border-radius: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
 
-        .about-img {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 20px 20px 0px var(--section-bg);
-        }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      border-color: rgba(168, 255, 102, 0.2);
+    }
 
-        .about-text h2 {
-            text-align: left;
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 14px;
+      color: var(--accent);
+    }
 
-        .about-text p {
-            margin-bottom: 20px;
-            color: var(--text-light);
-            font-size: 1.05rem;
-        }
+    .card p {
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
 
-        .signature {
-            font-family: var(--font-hand);
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-top: 20px;
-            display: block;
-        }
+    .footer {
+      text-align: center;
+      padding: 40px 0 20px;
+      color: var(--text-secondary);
+      font-size: 13px;
+      border-top: 1px solid rgba(80, 80, 100, 0.15);
+      margin-top: 40px;
+    }
 
-        /* === ПОРТФОЛИО === */
-        .portfolio {
-            background-color: var(--section-bg);
-        }
+    /* Мобильные стили */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+      .hero p {
+        font-size: 16px;
+      }
+      .btn {
+        padding: 12px 36px;
+        font-size: 16px;
+      }
+      .section-title {
+        font-size: 28px;
+      }
+      header {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
 
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            height: 400px;
-            cursor: pointer;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            transition: transform 0.5s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-
-        .gallery-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(74, 59, 50, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: 0.3s;
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
-        }
-
-        .gallery-overlay span {
-            color: var(--white);
-            font-family: var(--font-hand);
-            font-size: 2rem;
-            border: 2px solid var(--white);
-            padding: 10px 20px;
-        }
-
-        /* === ЦЕНЫ === */
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .price-card {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid #E6DCD3;
-            transition: 0.3s;
-            position: relative;
-        }
-
-        .price-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(74, 59, 50, 0.1);
-            border-color: var(--accent);
-        }
-
-        .price-card.popular {
-            border: 2px solid var(--accent);
-            background: #FFFCF9;
-        }
-
-        .badge {
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--accent);
-            color: var(--white);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-
-        .price-card h3 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .price {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .features {
-            text-align: left;
-            margin-bottom: 30px;
-        }
-
-        .features li {
-            margin-bottom: 10px;
-            color: var(--text-light);
-            font-size: 0.95rem;
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .features li::before {
-            content: "•";
-            color: var(--accent);
-            position: absolute;
-            left: 0;
-            font-size: 1.2rem;
-            line-height: 1.4;
-        }
-
-        /* === КОНТАКТЫ === */
-        .contact {
-            background-color: var(--text-main);
-            color: var(--bg-color);
-            text-align: center;
-        }
-
-        .contact h2 {
-            color: var(--bg-color);
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-bottom: 40px;
-            font-size: 1.2rem;
-        }
-
-        .contact-link {
-            color: var(--section-bg);
-            border-bottom: 1px solid transparent;
-        }
-
-        .contact-link:hover {
-            color: var(--accent);
-            border-bottom: 1px solid var(--accent);
-        }
-
-        .socials {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .social-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.2rem;
-            transition: 0.3s;
-        }
-
-        .social-btn:hover {
-            background: var(--accent);
-            transform: scale(1.1);
-        }
-
-        footer {
-            background: #3E3129;
-            color: rgba(255,255,255,0.5);
-            text-align: center;
-            padding: 20px;
-            font-size: 0.8rem;
-        }
-
-        /* === АДАПТИВНОСТЬ === */
-        @media (max-width: 768px) {
-            h2 { font-size: 2.5rem; }
-            .hero-content h1 { font-size: 3rem; }
-            
-            .nav-links {
-                position: absolute;
-                right: 0px;
-                top: 60px;
-                background-color: var(--bg-color);
-                flex-direction: column;
-                width: 100%;
-                text-align: center;
-                gap: 0;
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease;
-                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-            }
-
-            .nav-links.active {
-                max-height: 300px;
-                padding: 20px 0;
-            }
-
-            .nav-links li { padding: 15px 0; }
-            
-            .burger { display: block; }
-            
-            .about-grid { grid-template-columns: 1fr; }
-            .about-img { margin-bottom: 30px; box-shadow: 10px 10px 0px var(--section-bg); }
-            .about-text h2 { text-align: center; }
-        }
-    </style>
+    @media (max-width: 480px) {
+      .hero {
+        padding: 60px 0 40px;
+      }
+      .hero h1 {
+        font-size: 28px;
+      }
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Шапка -->
+  <!-- Анимированные блики -->
+  <div class="glow-dot dot-1"></div>
+  <div class="glow-dot dot-2"></div>
+
+  <div class="container">
     <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">Алина Малышева</a>
-                <ul class="nav-links">
-                    <li><a href="#about">Обо мне</a></li>
-                    <li><a href="#portfolio">Портфолио</a></li>
-                    <li><a href="#pricing">Услуги</a></li>
-                    <li><a href="#contact">Контакты</a></li>
-                </ul>
-                <div class="burger">
-                    <div class="line1"></div>
-                    <div class="line2"></div>
-                    <div class="line3"></div>
-                </div>
-            </nav>
-        </div>
+      <div class="logo"><span class="accent">Resight</span></div>
+      <a href="#about" class="nav-link">О продукте</a>
     </header>
 
-    <!-- Главный экран -->
     <section class="hero">
-        <div class="container hero-content">
-            <h1>История вашей красоты<br>в каждом кадре</h1>
-            <p>Атмосферная портретная и лайфстайл съемка. Сохраняю моменты, которые хочется перечитывать как любимую книгу.</p>
-            <a href="#contact" class="btn">Записаться на съемку</a>
-        </div>
+      <h1><span class="accent">Resight</span>, ваш ИИ-консультант по бизнесу с учётом российской специфики</h1>
+      <p>Проверяет ваши решения на соответствие НК РФ, 152-ФЗ, правилам маркетплейсов и best practices — и объясняет всё простым языком.</p>
+      <a href="#" class="btn">Попробовать бесплатно</a>
     </section>
+  </div>
 
-    <!-- Обо мне -->
-    <section id="about">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-img">
-                    <!-- Замените ссылку на ваше фото -->
-                    <img src="https://images.unsplash.com/photo-1552168324-d612d7772f8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Фотограф Алина Малышева">
-                </div>
-                <div class="about-text">
-                    <h2>Привет, я Алина ✨</h2>
-                    <p>Мне 22 года, и последние 2 года я живу фотографией. Для меня камера — это не просто инструмент, а способ остановить время и сохранить самые искренние эмоции.</p>
-                    <p>Я не про «позирование по линейке». Я про живые кадры, теплый свет и ваше настоящее состояние. Моя цель — сделать так, чтобы вы чувствовали себя комфортно перед объективом, а на фото увидели себя такими, какими вас видят ваши близкие: красивыми, вдохновленными и счастливыми.</p>
-                    <p>Работаю в теплой, кинематографичной эстетике. Люблю естественный свет, уютные локации и настоящие чувства.</p>
-                    <span class="signature">С любовью к вашему образу, Алина</span>
-                </div>
-            </div>
+  <section class="features">
+    <div class="container">
+      <h2 class="section-title">Почему предприниматели выбирают Resight</h2>
+      <div class="cards">
+        <div class="card">
+          <h3>✅ Проверка по закону</h3>
+          <p>Автоматически сверяет ваш план с НК РФ, 44-ФЗ, требованиями Ozon и Wildberries — и показывает, где вы рискуете штрафами или блокировкой.</p>
         </div>
-    </section>
-
-    <!-- Портфолио -->
-    <section id="portfolio" class="portfolio">
-        <div class="container">
-            <h2>Мои работы</h2>
-            <p class="section-subtitle">Живые эмоции, теплый свет и эстетика деталей</p>
-            
-            <div class="gallery">
-                <!-- Замените ссылки на свои фото -->
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Портрет">
-                    <div class="gallery-overlay"><span>Портрет</span></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Прогулка">
-                    <div class="gallery-overlay"><span>Прогулка</span></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1520854221256-17451cc330e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Студия">
-                    <div class="gallery-overlay"><span>Студия</span></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Эмоции">
-                    <div class="gallery-overlay"><span>Эмоции</span></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Детали">
-                    <div class="gallery-overlay"><span>Детали</span></div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Стиль">
-                    <div class="gallery-overlay"><span>Стиль</span></div>
-                </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="#" class="btn btn-outline">Смотреть больше в Instagram</a>
-            </div>
+        <div class="card">
+          <h3>📊 Юнит-экономика за 1 клик</h3>
+          <p>Рассчитывает рентабельность SKU на маркетплейсах, CAC, LTV и ROI — с учётом всех комиссий, логистики и налогов.</p>
         </div>
-    </section>
-
-    <!-- Услуги и цены -->
-    <section id="pricing">
-        <div class="container">
-            <h2>Выберите свой формат</h2>
-            <p class="section-subtitle">Честные цены без скрытых доплат</p>
-
-            <div class="pricing-grid">
-                <!-- Тариф 1 -->
-                <div class="price-card">
-                    <h3>Экспресс</h3>
-                    <span class="price">5 000 ₽</span>
-                    <ul class="features">
-                        <li>30 минут съемки</li>
-                        <li>1 локация</li>
-                        <li>15 фото в авторской обработке</li>
-                        <li>Срок готовности: 3 дня</li>
-                        <li>Помощь в позировании</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-outline">Выбрать</a>
-                </div>
-
-                <!-- Тариф 2 (Популярный) -->
-                <div class="price-card popular">
-                    <div class="badge">Хит 🔥</div>
-                    <h3>Стандарт</h3>
-                    <span class="price">9 000 ₽</span>
-                    <ul class="features">
-                        <li>1 час съемки</li>
-                        <li>До 2 локаций</li>
-                        <li>40 фото в ретуши + все исходники</li>
-                        <li>Помощь в подборе образа</li>
-                        <li>Срок готовности: 5 дней</li>
-                    </ul>
-                    <a href="#contact" class="btn">Выбрать</a>
-                </div>
-
-                <!-- Тариф 3 -->
-                <div class="price-card">
-                    <h3>Премиум</h3>
-                    <span class="price">15 000 ₽</span>
-                    <ul class="features">
-                        <li>2 часа съемки</li>
-                        <li>Неограниченно локаций</li>
-                        <li>80+ фото в детальной ретуши</li>
-                        <li>Услуги визажиста включены</li>
-                        <li>Фотокнига в подарок</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-outline">Выбрать</a>
-                </div>
-            </div>
+        <div class="card">
+          <h3>🧠 Объясняет как человек</h3>
+          <p>Два режима: для эксперта — со ссылками на статьи закона, для новичка — простыми словами без жаргона.</p>
         </div>
-    </section>
-
-    <!-- Контакты -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Давайте создадим магию вместе</h2>
-            <p class="section-subtitle" style="color: rgba(255,255,255,0.7);">Оставьте заявку или напишите мне напрямую в любой мессенджер</p>
-            
-            <div class="contact-info">
-                <a href="tel:+79990000000" class="contact-link">📞 +7 (999) 000-00-00</a>
-                <a href="mailto:hello@alinamalyshева.ru" class="contact-link">✉️ hello@alinamalyshева.ru</a>
-                <p>г. Москва и МО (выезд в другие города обсуждается)</p>
-            </div>
-
-            <a href="https://t.me/ваш_ник" class="btn" style="background: white; color: var(--text-main); border-color: white;">Написать в Telegram</a>
-
-            <div class="socials">
-                <a href="#" class="social-btn">IG</a>
-                <a href="#" class="social-btn">VK</a>
-                <a href="#" class="social-btn">WA</a>
-            </div>
+        <div class="card">
+          <h3>🔒 Без персональных данных</h3>
+          <p>Работает с обезличенными данными. Никаких ПДн — полное соответствие 152-ФЗ.</p>
         </div>
-    </section>
+        <div class="card">
+          <h3>📈 ROI x15 гарантирован</h3>
+          <p>Каждый рубль подписки возвращает ₽15 за счёт снижения издержек, роста удержания и автоматизации рутины.</p>
+        </div>
+        <div class="card">
+          <h3>💼 Единое рабочее пространство</h3>
+          <p>Все расчёты, идеи, чек-листы и рекомендации — в одном месте. Больше не нужно переключаться между Excel, CRM и 1С.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-        <p>© 2024 Алина Малышева. Все права защищены.</p>
-    </footer>
+  <div class="container">
+    <div class="hero" style="padding: 50px 0;">
+      <h2>Готовы освободить время от рутины и сосредоточиться на росте?</h2>
+      <a href="#" class="btn">Попробовать бесплатно</a>
+    </div>
+  </div>
 
-    <!-- Скрипт для мобильного меню и плавного скролла -->
-    <script>
-        // Мобильное меню
-        const burger = document.querySelector('.burger');
-        const nav = document.querySelector('.nav-links');
-        const navLinks = document.querySelectorAll('.nav-links li');
+  <footer class="footer">
+    <div class="container">
+      © 2026 Resight. ИИ-консультант для малого бизнеса в России.
+    </div>
+  </footer>
 
-        burger.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            
-            // Анимация бургера
-            burger.classList.toggle('toggle');
-        });
-
-        // Закрытие меню при клике на ссылку
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                nav.classList.remove('active');
-            });
-        });
-
-        // Плавный скролл для якорных ссылок
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
 </body>
 </html>
